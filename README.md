@@ -1,2 +1,2 @@
-# aoc17
-advent of code 2107
+# aoc18 
+advent of code 2018

@@ -1,0 +1,23 @@
+{
+    "name": "AdventOfCode2018",
+    "description": "bim bum bam",
+    "minimum-stability": "beta",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "francesco",
+            "email": "francesco.tarocchi@neropaco.net"
+        }
+    ],
+    "require": {
+        "stonedz/pff2": "~2",
+        "stonedz/pff2-doctrine": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "pff\\models\\": "app/models",
+            "pff\\controllers\\": "app/controllers",
+            "pff\\services\\": "app/services"
+        }
+    }
+}

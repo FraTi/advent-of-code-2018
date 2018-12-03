@@ -14,7 +14,7 @@ class Index_Controller extends AController {
      * @return mixed
      */
     public function index() {
-        echo 'Welcome to pff!';
+        echo 'List of Days coming soon!';
     }
 
 }

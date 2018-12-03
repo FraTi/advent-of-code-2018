@@ -70,6 +70,7 @@ class Days_Controller extends AController {
             $arr_freq = array_count_values($arr);
 
             foreach ($arr_freq as $ricorrenze){
+
                 if($ricorrenze == 2){
                     return true;
                 }
@@ -84,11 +85,30 @@ class Days_Controller extends AController {
             $arr_freq = array_count_values($arr);
 
             foreach ($arr_freq as $ricorrenze){
+
                 if($ricorrenze == 3){
                     return true;
                 }
             }
 
+            return false;
+        }
+        function string_matching($string1, $string2){
+
+            $arr1 = str_split($string1);
+            $arr2 = str_split($string2);
+
+            $nofequ = 0;
+
+            for($i=0;$i<count($arr1);$i++){
+
+                if( $arr1[$i] == $arr2[$i] ){
+                    $nofequ++;
+                }
+            }
+            if($nofequ==25){
+                return true;
+            }
             return false;
         }
 
@@ -108,10 +128,35 @@ class Days_Controller extends AController {
             }
         }
 
-        echo $noftwo.' * '.$nofthree.' = '.$noftwo*$nofthree;
+        echo $noftwo.' * '.$nofthree.' = '.$noftwo*$nofthree.'<br>';
 
-       // var_dump( $data );
+        $found = '';
+        for($i=0;$i<count($data);$i++){
 
+           for($j=0;$j<count($data);$j++){
+
+               if( string_matching($data[$i],$data[$j]) ){
+                   $found = $data[$i].'<br>'.$data[$j];
+               }
+
+           }
+
+
+        }
+
+
+        echo 'le stringhe sono:<br>'.$found;
+    }
+
+    public function day3(){
+
+        $file = $this->_app->getExternalPath().'app/public/files/input3.txt';
+
+        $data = explode(PHP_EOL, file_get_contents($file));
+
+        var_dump(count($data));
+
+        var_dump($data);
 
     }
 

@@ -150,13 +150,108 @@ class Days_Controller extends AController {
 
     public function day3(){
 
+        function positionAndSize($string){
+
+            $atspace = explode(' ', $string);
+            $ID = $atspace[0];
+            $position= explode(',', substr($atspace[2], 0, -1) );
+            $size = explode('x', $atspace[3] );
+
+            return array( 'ID'=>$ID, 'position'=>$position, 'size'=>$size );
+        }
+
         $file = $this->_app->getExternalPath().'app/public/files/input3.txt';
 
         $data = explode(PHP_EOL, file_get_contents($file));
+        $dopo = [];
+        foreach ($data as $riga){
+            $pands = positionAndSize($riga);
+            $dopo[$pands['ID']] = $pands;
+        }
+
+        $stoffa = [];
+
+        for($i=0;$i<1000;$i++){
+            $stoffa[$i] = [];
+            for($j=0;$j<1000;$j++){
+                array_push($stoffa[$i], $j) ;
+            }
+        }
+        $inches = 0;
+        $IDnottouched = [];
+
+        foreach ($data as $riga){
+            $touched = false;
+            $pands = positionAndSize($riga);
+
+            $i_inizio = $pands['position'][1];
+            $j_inizio = $pands['position'][0];
+
+            $i_fine = $i_inizio+$pands['size'][1];
+            $j_fine = $j_inizio+$pands['size'][0];
+
+            for($i=$i_inizio;$i<$i_fine;$i++){
+
+                for($j=$j_inizio;$j<$j_fine;$j++){
+
+
+                    if( $stoffa[$i][$j] == 'O' ){
+                        $stoffa[$i][$j] = 'X';
+                        $inches++;
+                        $touched = true;
+                        continue;
+                    }else if( $stoffa[$i][$j] == 'X' ){
+                        continue;
+                    }
+
+                    $stoffa[$i][$j] = 'O';
+
+                }
+            }
+
+            if(!$touched){
+                array_push( $IDnottouched, $pands['ID']);
+            }
+        }
+
+
+        $idpure = [];
+        foreach ($IDnottouched as $riga){
+            $pure = true;
+            $pands = $dopo[$riga];
+
+            $i_inizio = $pands['position'][1];
+            $j_inizio = $pands['position'][0];
+
+            $i_fine = $i_inizio+$pands['size'][1];
+            $j_fine = $j_inizio+$pands['size'][0];
+
+            for($i=$i_inizio;$i<$i_fine;$i++){
+
+                for($j=$j_inizio;$j<$j_fine;$j++){
+
+                    if( $stoffa[$i][$j] == 'X' ){
+                        $pure = false;
+                    }
+
+                }
+            }
+
+
+            if($pure){
+                array_push($idpure, $pands['ID']);
+            }
+
+        }
+
 
         var_dump(count($data));
 
-        var_dump($data);
+        var_dump($inches);
+
+        var_dump($idpure);
+
+
 
     }
 
